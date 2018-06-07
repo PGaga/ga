@@ -14,3 +14,28 @@
         }
     }
   }
+折半插入排序：假设数组中有序的数组是a[0]~a[i-1]，此时需要将a[i]元素插入进去，此时需要利用折半查找在有序表中查到合适的位置
+和插入排序做比较 就是在插入的时候 方式不一样，插入排序是挨个做比较，折半不是挨个做比较
+
+  public static void BinaryInsertSort(int [] arr){
+    int temp ,i ,j ,low,high,mid;
+    for(i=1;i<arr.length;i++){
+      if(arr[i]<arr[i-1]){
+        temp = a[i];
+        low =0;high=i-1;
+        while(low<high){
+          if(temp<arr[mid]){
+            high=mid-1;
+          }else{
+            low = mid+1;
+          }
+          for(j=i-1;j>=low;j--){
+            arr[j+1]=arr[j];
+          }
+          a[low]=temp
+        }
+      }
+    }
+  }
+  
+  
