@@ -1,0 +1,66 @@
+804. Unique Morse Code Words[独特的莫尔斯电码字]
+	26个字母，每一个字母对应一个编码，每个单词由字母组成，即每个单词都有一个编码。
+	现在有一个words=["zin","gcn","diz","haz"] 返回 该words里面有几组编码
+	思路：26个字母 hash存一下 <字母，编码>
+		遍历 words里面的单词 存起来<单词，编码> 返回Hash长度
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+		// 这是一个字典表 26 个字母对应的编码
+         String[] strings = new String[]{"a_.-", "b_-...", "c_-.-.", "d_-..", "e_.", "f_..-.", 
+				"g_--.", "h_....", "i_..", "j_.---", "k_-.-", "l_.-..", "m_--", "n_-.",
+                "o_---", "p_.--.", "q_--.-", "r_.-.", "s_...", "t_-", "u_..-", "v_...-", 
+				"w_.--", "x_-..-", "y_-.--", "z_--.."};
+        Map<String, String> hashMap = new HashMap<>();
+        for (int i = 0; i < strings.length; i++) {
+		// Codein 是键值 26个字母
+            String Codein = strings[i].substring(0, strings[i].indexOf("_"));
+		// deCode 是编码 值
+            String deCode = strings[i].substring(strings[i].indexOf("_") + 1);
+            hashMap.put(Codein, deCode);
+        }
+        Map<String, Integer> stringMap = new HashMap();// 放对应的编码解码
+		// 后面是常规的HashMap处理 不懂可以看771
+        for (int j = 0; j < words.length; j++) {
+            String word = words[j];
+            String aa;
+            String bb="";
+            for (int k = 0; k < words[j].length(); k++) {
+                char temp = words[j].charAt(k);
+                String a = temp + "";
+                 aa = hashMap.get(a);
+                bb = bb+ ""+aa;
+                if (k == word.length()-1) {
+                    if (!stringMap.containsKey(bb)) {
+                        stringMap.put(bb, 0);
+                    } else {
+                        stringMap.put(bb, stringMap.get(bb) + 1);
+                    }
+                }
+            }
+        }
+        return stringMap.size();
+    }
+}  
+提供一个网上的高效解法：
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+    	String[] MORSE = {".-","-...","-.-.","-..",".","..-.",
+			"--.","....","..",".---","-.-",".-..","--","-.",
+			"---",".--.","--.-",".-.","...","-","..-","...-",
+			".--","-..-","-.--","--.."} ;
+    	
+    	Set<String> seen = new HashSet<String>() ;
+    	
+    	for(String word : words)
+    	{
+    		StringBuilder code = new StringBuilder() ;
+    		for (char c : word.toCharArray())
+    		{
+    			code.append(MORSE[c - 'a']) ;// 利用的26个字母的规律
+    		}
+    		seen.add(code.toString()) ;
+    	}
+    	return seen.size() ;
+    }
+}	
+ 
