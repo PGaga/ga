@@ -1,0 +1,35 @@
+771. Jewels and Stones
+	Input: J = "aA", S = "aAAbbbb"
+	Output: 3
+	题目的意思：J中的字符串的字符 在字符串S中一共出现的次数
+	思路：用到了hashMap 这是一个《k,v》对，将S字符串的每一个字符 存在HashMap中
+		<a,1><A,2><b,4>，遍历J中的字符，取出对应的K 的value 相加 返回即可
+class Solution{
+	public int numJewwLsInStones(String J, String S){
+		Map<Character,Integer> charMap = new HashMap();// 建立一个hash
+		int temp = 0;
+		if(J==null||S==null){// 两个字符串为空 返回0
+			return 0;
+		}
+		else{
+			for(int i=0;i<S.length;i++){ 
+			// 遍历字符串S 变成一个字符
+				char charS = S.charAt(i);
+			// 判断charMap 里面有没有这个键 如果没有则是<key,1>
+			// 有这个键 <key,值+1>
+				if(!charMap.containKeys(charS)){
+					charMap.put(charS,1);
+				}else{
+					charMap.put(charS,charMap.get(charS)+1);
+				}
+			}
+		}
+		// 将字符串J 变成字符 若该字符串存在 返回该键的值 
+	for (int j =0;j<J.length;j++){
+		if(charMap.containKeys(J.charAt(j))){
+			temp = temp+charMap.get(J.charAt(j))
+		}
+	}
+	return temp;
+	}
+}
