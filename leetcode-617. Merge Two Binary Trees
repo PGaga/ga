@@ -1,0 +1,37 @@
+617. Merge Two Binary Trees
+	题目：合并两个二叉树，生成一个新的二叉树，规则是将对应的位置上的数字相加 若是没有的话则为null
+	思路：有两颗二叉树，选择一个树为主树（t1）即是要选择返回的树
+		1.若两颗树的节点都不为空，递归，对应位置的数相加即可
+			t1.val+=t2.val
+		2.若t1==null 返回 t2 否则返回t1
+    
+Given two binary trees and imagine that when you put one of them to cover the other, 
+some nodes of the two trees are overlapped while the others are not.
+You need to merge them into a new binary tree. The merge rule is that if two nodes overlap, t
+hen sum node values up as the new value of the merged node. 
+Otherwise, the NOT null node will be used as the node of new tree.
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if(t1!=null&&t2!=null){
+            t1.left =mergeTrees(t1.left,t2.left);
+            t1.right=mergeTrees(t1.right,t2.right);
+            t1.val +=t2.val;
+            return t1;
+        }
+        if(t1==null){
+            return t2;
+        }
+        else{
+            return t1;
+        }
+    }
+}
