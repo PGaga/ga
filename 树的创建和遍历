@@ -1,0 +1,112 @@
+建立一个二叉树。
+// 建立树
+public void creatBintree(int a[]){
+        nodeList = new LinkedList<TreeNode>();
+        //将数组里面每一个值 依次转化为Node节点
+        for (int nodeIndex=0;nodeIndex<a.length;nodeIndex++){
+            nodeList.add(new TreeNode(a[nodeIndex]));
+        }
+        // 对前lastParentIndex-1 个父节点按照父节点与孩子节点的关系建立二叉树
+        int dd =a.length/2 -1;
+        for (int parentIndex = 0;parentIndex<a.length/2 -1;parentIndex++){
+            // 左孩子
+            nodeList.get(parentIndex).left=nodeList.get(parentIndex*2+1);
+            // 有孩子
+            nodeList.get(parentIndex).right=nodeList.get(parentIndex*2+2);
+        }
+        // 最后一个可能没有右孩子 所以单独处理
+        int lastparentIndex =a.length/2-1;
+        // 左孩子
+        nodeList.get(lastparentIndex).left=nodeList.get(lastparentIndex*2+1);
+        //如果数组长度为奇数 有右孩子
+        if (a.length%2==1){
+            nodeList.get(lastparentIndex).right=nodeList.get(lastparentIndex*2+2);
+        }
+    }
+  // 前序遍历：先遍历根节点 在遍历左孩子和右孩子
+  //1.递归
+      public static void preOrderTree(TreeNode treeNode){
+        if (treeNode==null){
+            return;
+        }
+        System.out.print(treeNode.val + " ");
+        preOrderTree(treeNode.left);
+        preOrderTree(treeNode.right);
+    }
+ //2.循环
+     public void preOrder1(TreeNode Node) {
+        Stack<TreeNode> stack = new Stack<>();
+        while(Node != null || !stack.empty())
+        {
+            while(Node != null)
+            {
+                System.out.print(Node.val + "   ");
+                stack.push(Node);
+                Node = Node.left;
+            }
+            if(!stack.empty())
+            {
+                Node = stack.pop();
+                Node = Node.right;
+            }
+        }
+    }
+  // 中序遍历：先遍历左孩子，在遍历根节点和右孩子
+ //1.递归
+ public static void midOrderTree(TreeNode treeNode){
+        if (treeNode==null){
+            return;
+        }
+        midOrderTree(treeNode.left);
+        System.out.print(treeNode.val + " ");
+        midOrderTree(treeNode.right);
+    }
+ // 2.循环
+ public void midOrderTree1(TreeNode Node){
+        Stack<TreeNode> stack = new Stack<>();
+        while (Node!=null||!stack.empty()){
+            while (Node!=null){
+               stack.push(Node);
+                Node=Node.left;
+            }
+            if(!stack.empty()){
+                Node=stack.pop();
+                System.out.print(Node.val+"  ");
+                Node=Node.right;
+            }
+        }
+    }
+   // 后序遍历：先遍历左右孩子节点，最后遍历根节点
+   //1.递归
+    public static void AfterOrderTree(TreeNode treeNode){
+        if (treeNode==null){
+            return;
+        }
+        AfterOrderTree(treeNode.left);
+        AfterOrderTree(treeNode.right);
+        System.out.print(treeNode.val + " ");
+    }
+   //2.循环
+    public void AfterOrderTree1(TreeNode Node)
+    {
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        int i = 1;
+        while(Node != null || !stack1.empty()) {
+            while (Node != null) {
+                stack1.push(Node);
+                stack2.push(0);
+                Node = Node.left;
+            }
+            while(!stack1.empty() && stack2.peek() == i) {
+                stack2.pop();
+                System.out.print(stack1.pop().val + "   ");
+            }
+            if(!stack1.empty()) {
+                stack2.pop();
+                stack2.push(1);
+                Node = stack1.peek();
+                Node = Node.right;
+            }
+        }
+    }
